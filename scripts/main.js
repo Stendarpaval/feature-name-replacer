@@ -19,7 +19,7 @@ async function replaceMonsterName(item) {
 	
 	let featureDesc = monsterFeature.data.data.description.value;
 	let regex = /\{creature\}|\{type\}/g;
-	if (item.actor.getFlag(moduleName, "namedCreature")) {
+	if (item.actor.getFlag(moduleName, "namedCreature") || item.actor.type === "character") {
 		regex = /(The\W|the\W)?(\{creature\}|\{type\})/g;
 		featureDesc = featureDesc.replaceAll(regex, item.actor.name);
 	} else if (item.actor.getFlag(moduleName, "namedCreature") === undefined) {
@@ -41,7 +41,7 @@ async function replaceMonsterName(item) {
  */
 async function injectNamedCreatureOption(args, html) {
 	let data = {value: false};
-	if (args.object.getFlag(moduleName, "namedCreature")) {
+	if (args.object.getFlag(moduleName, "namedCreature")  || item.actor.type === "character") {
 		data.value = true;
 	} else if (args.object.getFlag(moduleName, "namedCreature") === undefined) {
 		await args.object.setFlag(moduleName, "namedCreature", false);
