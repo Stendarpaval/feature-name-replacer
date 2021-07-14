@@ -1,0 +1,8 @@
+{
+	"SETTINGS.FNR.replaceKeywords": "Keywords to replace",
+	"SETTINGS.FNR.replaceKeywordsHint": "You can add or remove keywords that will be replaced with an actor name. The keywords should be semicolon-separated, for example: 'creature;type'. In that case, instances of {creature} and {type} will be replaced in descriptions of features that are added to actor sheets.",
+	"SETTINGS.FNR.namedCreaturesList": "List of Named Creatures",
+	"SETTINGS.FNR.namedCreaturesListHint": "If you're not using the dnd5e system, then you can use this text field to list all the Named Creatures in your world. Use a semicolon-separated list of actor names, for example: 'King George;Goriax;The Boulder'.",
+	"SETTINGS.FNR.descriptionDataPath": "Description datapath",
+	"SETTINGS.FNR.descriptionDataPathHint": "Here you can change the datapath that specifies where the description text is stored in a feature's item.data. For the dnd5e system, this would be 'data.description.value'."
+}
