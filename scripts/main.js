@@ -1,10 +1,13 @@
 const moduleName = "feature-name-replacer";
 
-Hooks.on("init", () => {
-	console.log("Feature Name Replacer | Initializing...");
-});
-
-
+/**
+ * Check if the item originates from the Monster Features compendium
+ * and if so, replace {creature} and {type} with the creature's name.
+ * If the creature happens to be a Named Creature, then also remove any
+ * preceding article ("the").
+ * @param {Item5e} [item]			The feature item that is added to the actor
+ * @return {void}					Return nothing to continue
+ */
 async function replaceMonsterName(item) {
 	const sourceIdPrefix = "Compendium.dnd5e.monsterfeatures.";
 	if (!item.getFlag("core","sourceId").startsWith(sourceIdPrefix)) return;
@@ -30,6 +33,12 @@ async function replaceMonsterName(item) {
 	await item.update({"data.description.value": featureDesc});
 }
 
+/**
+ * Inject the handlebars template for the Named Creature option into 
+ * the ActorTypeConfig application.
+ * @param {ActorTypeConfig} [args]	The ActorTypeConfig application data
+ * @param {string} [html]			The rendered html of the ActorTypeConfig application
+ */
 async function injectNamedCreatureOption(args, html) {
 	let data = {value: false};
 	if (args.object.getFlag(moduleName, "namedCreature")) {
@@ -42,6 +51,12 @@ async function injectNamedCreatureOption(args, html) {
 	html.css({height: 'auto'}).find('button[type="submit"]').before(namedCreatureHtml);
 }
 
+/**
+ * Detect the value of the Named Creature option when the ActorTypeConfig
+ * application is closed.
+ * @param {ActorTypeConfig} [args]	The ActorTypeConfig application data
+ * @param {string} [html]			The rendered html of the ActorTypeConfig application
+ */
 async function detectNamedCreatureOption(args, html) {
 	if (html.find('input[name="namedCreature"]')[0].checked) {
 		await args.object.setFlag(moduleName, "namedCreature", true);
@@ -50,6 +65,7 @@ async function detectNamedCreatureOption(args, html) {
 	}
 }
 
+// Tie functions to relevant hooks
 Hooks.on("createItem", async (item) => {
 	await replaceMonsterName(item);
 });
