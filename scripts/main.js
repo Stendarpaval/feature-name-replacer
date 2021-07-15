@@ -40,8 +40,20 @@ Hooks.on("init", () => {
  * @return {void}					Return nothing to continue
  */
 async function replaceMonsterName(item) {
-	let featureDesc = item.data?.[game.settings.get(moduleName, "descriptionDataPath")];
+	let descPath = game.settings.get(moduleName, "descriptionDataPath");
+	let pathParts = descPath.split(".");
+	for (let i = 0; i < pathParts.length; i++) {
+		if (pathParts[i] === "") {
+			pathParts.splice(i,1);
+			i--;
+		}
+	}
+	let featureDesc = item.data;
+	for (let pathPart of pathParts) {
+		featureDesc = featureDesc[pathPart];
+	}
 	if (!featureDesc) return;
+	
 	let keywords = game.settings.get(moduleName,"replaceKeywords");
 	let splitKeywords = keywords.split(";");
 	for (let i = 0; i < splitKeywords.length; i++) {
@@ -61,15 +73,13 @@ async function replaceMonsterName(item) {
 	let regex = new RegExp(regexString,"g");
 	let regexNamedCreature = new RegExp(`(The\\\W|the\\\W)?(${regexString})`,"g");
 	
-	// let regex = /\{creature\}|\{type\}/g;
-	if (item.actor.getFlag(moduleName, "namedCreature") || item.actor.type === "character" || checkNamedCreatureList(item)) {
-		// regex = /(The\W|the\W)?(\{creature\}|\{type\})/g;
-		featureDesc = featureDesc.replaceAll(regexNamedCreature, item.actor.name);
-	} else if (item.actor.getFlag(moduleName, "namedCreature") === undefined) {
-		await item.actor.setFlag(moduleName, "namedCreature", false);
-		featureDesc = featureDesc.replaceAll(regex, item.actor.name.toLowerCase());
+	if (item.parent?.getFlag(moduleName, "namedCreature") || item.parent?.type === "character" || checkNamedCreatureList(item)) {
+		featureDesc = featureDesc.replaceAll(regexNamedCreature, item.parent?.name);
+	} else if (item.parent?.getFlag(moduleName, "namedCreature") === undefined) {
+		await item.parent?.setFlag(moduleName, "namedCreature", false);
+		featureDesc = featureDesc.replaceAll(regex, item.parent?.name.toLowerCase());
 	} else {
-		featureDesc = featureDesc.replaceAll(regex, item.actor.name.toLowerCase());
+		featureDesc = featureDesc.replaceAll(regex, item.parent?.name.toLowerCase());
 	}
 
 	// if (item.name !== monsterFeature.name) return;

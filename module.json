@@ -11,12 +11,12 @@
 		}
 	],
 	"url": "https://github.com/Stendarpaval/feature-name-replacer",
-	"version": "0.0.3",
+	"version": "0.1.0",
 	"minimumCoreVersion": "0.8.8",
 	"compatibleCoreVersion": "0.8.8",
 	"esmodules": [
 		"scripts/main.js"
 	],
 	"manifest": "https://raw.githubusercontent.com/Stendarpaval/feature-name-replacer/main/module.json",
-	"download": "https://github.com/Stendarpaval/feature-name-replacer/releases/download/0.0.3/module.zip"
+	"download": "https://github.com/Stendarpaval/feature-name-replacer/releases/download/0.1.0/module.zip"
 }
