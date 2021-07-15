@@ -1,0 +1,56 @@
+<form class="flexcol" autocomplete="off">
+	<section id="config-tabs" class="content">
+		<p class="notes">{{localize 'SETTINGS.FNR.replaceKeywordsHint1'}}</p>
+		<p class="notes">{{localize 'SETTINGS.FNR.replaceKeywordsHint2'}}</p>
+		<p class="notes">{{localize 'SETTINGS.FNR.replaceKeywordsHint3'}}</p>
+		<div style="display:grid; grid-template-columns: 33% 33% 33%; column-gap:2px;">
+			<button type="button" name="addRow" class="FNRaddRow" style="grid-column-start:1; grid-column-end:1; align-self:center">
+				<i class="fas fa-plus"></i> {{localize 'FNR.addRow'}}
+			</button>
+			<button type="button" name="removeRow" class="FNRremoveRow" {{#if removeRowDisabled}} disabled {{/if}} style="grid-column-start:2; grid-column-end:2; align-self:center">
+				<i class="fas fa-minus"></i> {{localize 'FNR.removeRow'}}
+			</button>
+			<button type="button" name="resetTable" class="FNRresetTable" style="grid-column-start:3; grid-column-end:3; align-self:center">
+				<i class="fas fa-undo"></i> {{localize 'FNR.resetTable'}}
+			</button>
+		</div>
+		<div class="settings-list">
+			<table>
+				<thead>
+					<tr>
+						<td style="text-align:center;">{{localize 'FNR.keywords'}}</td>
+						<td style="text-align:center;">{{localize 'FNR.documentType'}}</td>
+						<td style="text-align:center;">{{localize 'FNR.dataPathTitle'}}</td>
+						<td style="text-align:center;">{{localize 'FNR.staticStringTitle'}}</td>
+					</tr>
+				</thead>
+				<tbody>
+					{{#each this.keywordTable.rows}}
+					<tr>
+						<td>
+							<input type="text" class="keywordCell" name="{{this.keywordId}}" value="{{this.keywordValue}}"/>
+						</td>
+						<td style="text-align:center;">
+							<select name="{{this.documentTypeId}}">
+								<option value="0" {{#if this.documentTypeValue.selectedActor}}selected{{/if}}>{{localize 'Actor'}}</option>
+								<option value="1" {{#if this.documentTypeValue.selectedItem}}selected{{/if}}>{{localize 'Item'}}</option>
+							</select>
+						</td>
+						<td>
+							<input type="text" class="datapathCell" name="{{this.dataPathId}}" value="{{this.dataPathValue}}"/>
+						</td>
+						<td>
+							<input type="text" class="staticStringCell" name="{{this.staticStringId}}" value="{{this.staticStringValue}}"/>
+						</td>
+					</tr>
+					{{/each}}
+				</tbody>
+			</table>
+		</div>
+	</section>
+	<footer class="sheet-footer flexrow">
+		<button type="submit" name="submit">
+			<i class="far fa-save"></i> {{localize 'SETTINGS.Save'}}
+		</button>
+	</footer>
+</form>

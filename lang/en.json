@@ -1,8 +1,22 @@
 {
-	"SETTINGS.FNR.replaceKeywords": "Keywords to replace",
-	"SETTINGS.FNR.replaceKeywordsHint": "You can add or remove keywords that will be replaced with an actor name. The keywords should be semicolon-separated, for example: 'creature;type'. In that case, instances of {creature} and {type} will be replaced in descriptions of features that are added to actor sheets.",
+	"SETTINGS.FNR.replaceKeywordsHint1": "Here you can add or remove keywords that will be replaced with a replacement value. You can use multiple keywords in a single row (semicolon-separated) to replace multiple keywords with the same value, for example: '{creature};{actor.name};{name}'.",
+	"SETTINGS.FNR.replaceKeywordsHint2": "If you set the document type to Actor, then you could use 'data.name' as datapath to a replacement value. In that case, instances of {creature}, {actor.name} and {name} will be replaced with the value found in 'actor.data.name'.",
+	"SETTINGS.FNR.replaceKeywordsHint3": "You can use the optional static string column to always replace the keyword with the string you write there.",
 	"SETTINGS.FNR.namedCreaturesList": "List of Named Creatures",
 	"SETTINGS.FNR.namedCreaturesListHint": "If you're not using the dnd5e system, then you can use this text field to list all the Named Creatures in your world. Use a semicolon-separated list of actor names, for example: 'King George;Goriax;The Boulder'.",
 	"SETTINGS.FNR.descriptionDataPath": "Description datapath",
-	"SETTINGS.FNR.descriptionDataPathHint": "Here you can change the datapath that specifies where the description text is stored in a feature's item.data. For the dnd5e system, this would be 'data.description.value'."
+	"SETTINGS.FNR.descriptionDataPathHint": "Here you can change the datapath that specifies where the description text is stored in an item's 'item.data' object. For the dnd5e system, this would be 'data.description.value'.",
+	"FNR.addRow": "Add row",
+	"FNR.removeRow": "Remove row",
+	"FNR.resetTable": "Reset table",
+	"FNR.creature": "Creature",
+	"FNR.keywords": "Keywords",
+	"FNR.documentType": "Document type",
+	"FNR.dataPathTitle": "Datapaths to replacement value",
+	"FNR.staticStringTitle": "Static string (optional)",
+	"SETTINGS.FNR.keywordSettings": "Keyword Replacement Settings",
+	"SETTINGS.FNR.keywordSettingsLabel": "Open Keyword settings",
+	"SETTINGS.FNR.keywordSettingsHint": "In this menu you can configure which keywords should be replaced with which values.",
+	"FNR.actorDatapathParseNotify": "Feature Name Replacer | An actor datapath couldn't be parsed for {keyword}.",
+	"FNR.itemDatapathParseNotify": "Feature Name Replacer | An item datapath couldn't be parsed for {keyword}."
 }
