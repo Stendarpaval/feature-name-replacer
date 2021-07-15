@@ -1,7 +1,7 @@
 {
 	"name": "feature-name-replacer",
 	"title": "Feature Name Replacer",
-	"description": "A module for dnd5e that replaces the names in curly brackets of Monster Features.",
+	"description": "A system agnostic module that replaces the names in curly brackets of item descriptions added to actor sheets.",
 	"author": "Stendarpaval (Lupusmalus)",
 	"languages": [
 		{
