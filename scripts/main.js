@@ -92,10 +92,9 @@ async function replaceMonsterName(item) {
 			[dataPath, pathSkipped] = checkDataPath(item, 'item', tableRow[i]);
 		}
 		if (!pathSkipped) {
-			newName = String((tableRow[i][3] !== "") ? tableRow[i][3] : dataPath)?.capitalize();
+			newName = String((tableRow[i][3] !== "") ? tableRow[i][3] : dataPath);
 			if (parseInt(tableRow[i][1]) === 0) {
 				if (tableRow[i][0].indexOf("{type}") === -1 && (item.parent?.getFlag(moduleName, "namedCreature") || item.parent?.type === "character" || checkNamedCreatureList(item))) {
-					newName = String(dataPath)?.capitalize();
 					featureDesc = featureDesc.replaceAll(regexNamedCreature, newName);
 				} else if (item.parent?.getFlag(moduleName, "namedCreature") === undefined) {
 					await item.parent?.setFlag(moduleName, "namedCreature", false);
