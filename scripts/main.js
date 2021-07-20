@@ -9,27 +9,44 @@ const moduleName = "feature-name-replacer";
  * @return {void}					Return nothing to continue
  */
 async function replaceMonsterName(item) {
-	const sourceIdPrefix = "Compendium.dnd5e.monsterfeatures.";
-	if (!item.getFlag("core","sourceId").startsWith(sourceIdPrefix)) return;
-	const sourceId = item.getFlag("core","sourceId").slice(sourceIdPrefix.length);
+	let featureDesc = item.data.data?.description.value;
+	if (!featureDesc) return;
 	
-	const mfCompendium = await game.packs.get("dnd5e.monsterfeatures");
-	const monsterFeature = mfCompendium.get(sourceId);
-	if (!monsterFeature) return;
-	
-	let featureDesc = monsterFeature.data.data.description.value;
-	let regex = /\{creature\}|\{type\}/g;
+	let replacementData = {
+		creature: {
+			isName: false,
+			dataPath: "data.name",
+			regex: new RegExp(`{creature}`,"g")
+		},
+		namedCreature: {
+			isName: true,
+			dataPath: "data.name",
+			regex: new RegExp(`(The\\\W|the\\\W)?({creature})`,"g")
+		},
+		type: {
+			isName: false,
+			dataPath: "data.data.details.type.value",
+			regex: new RegExp(`{type}`,"g")
+		}
+	};
+
 	if (item.actor.getFlag(moduleName, "namedCreature") || item.actor.type === "character") {
-		regex = /(The\W|the\W)?(\{creature\}|\{type\})/g;
-		featureDesc = featureDesc.replaceAll(regex, item.actor.name);
+		if (item[replacementData.namedCreature.dataPath]) {
+			featureDesc = featureDesc.replaceAll(replacementData.namedCreature.regex, item[replacementData.namedCreature.dataPath]);
+		}
 	} else if (item.actor.getFlag(moduleName, "namedCreature") === undefined) {
 		await item.actor.setFlag(moduleName, "namedCreature", false);
-		featureDesc = featureDesc.replaceAll(regex, item.actor.name.toLowerCase());
-	} else {
-		featureDesc = featureDesc.replaceAll(regex, item.actor.name.toLowerCase());
+		if (item[replacementData.creature.dataPath]) {
+			featureDesc = featureDesc.replaceAll(replacementData.creature.regex, item[replacementData.creature.dataPath].toLowerCase());
+		}
+	} else if (item[replacementData.creature.dataPath]) {
+		featureDesc = featureDesc.replaceAll(replacementData.creature.regex, item[replacementData.creature.dataPath].toLowerCase());
+	}
+	
+	if (item[replacementData.type.dataPath]) {
+		featureDesc = featureDesc.replaceAll(replacementData.type.regex, item[replacementData.type.dataPath].toLowerCase());
 	}
 
-	if (item.name !== monsterFeature.name) return;
 	await item.update({"data.description.value": featureDesc});
 }
 
